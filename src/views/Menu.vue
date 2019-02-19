@@ -1,12 +1,27 @@
 <template>
-    <div>
-        This is the Menu view!
-    </div>
+<v-container fluid>
+  <MenuLanguage />
+  <PopularItems />
+
+</v-container>
 </template>
 
 <script>
+import PopularItems from "../components/PopularItems.vue";
+import MenuLanguage from "../components/MenuLanguage.vue";
 export default {
   name: "Menu",
-  components: {}
+  components: {
+    PopularItems,
+    MenuLanguage
+  },
+  created() {
+    return this.$store.dispatch("getOrderItems");
+  },
+  computed: {
+    menuLang() {
+      return this.$store.state.menuLang;
+    }
+  }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <HelloWorld v-if="!menuError && !loadingMenu" />
-    <CircleLoader v-if="loadingMenu" />
+    <v-progress-circular v-if="loadingMenu" />
     <Error v-if="menuError" />
   </div>
 </template>
@@ -10,14 +10,12 @@
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
 import Error from "@/components/Error.vue";
-import { CircleLoader } from "@saeris/vue-spinners";
 
 export default {
   name: "home",
   components: {
     HelloWorld,
-    Error,
-    CircleLoader
+    Error
   },
   created() {
     return this.$store.dispatch("getMenu");

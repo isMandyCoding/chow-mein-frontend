@@ -1,14 +1,29 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/contact" >Location & Hours</router-link> |
-      <router-link to="/menu" >Menu</router-link>
-    </div>
-    <router-view/>
-  </div>
+<v-app>
+  <!-- <v-navigation-drawer app></v-navigation-drawer> -->
+    <v-toolbar>
+    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar-title>Asian Cafe Express</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn flat to="/" >Home</v-btn>      
+      <v-btn flat to="/about">About</v-btn>
+      <v-btn flat to="/contact">Location & Hours</v-btn>
+      <v-btn flat to="/menu">Menu</v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
+  <v-content>
+    <v-container fluid>
+      <router-view></router-view>
+    </v-container>
+  </v-content>
+  <v-footer app></v-footer>
+</v-app>
+  
 </template>
+
+
+
 
 <style>
 #app {
