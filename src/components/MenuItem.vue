@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       dialog: false,
-      quantity: 0
+      quantity: 1
     };
   },
   computed: {
@@ -110,7 +110,7 @@ export default {
         id: this.$store.state.order.itemId
       };
       this.$store.dispatch("addToCart", newItem);
-      this.quantity = 0;
+      this.quantity = 1;
     }
   }
 };

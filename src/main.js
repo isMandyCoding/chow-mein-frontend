@@ -6,6 +6,8 @@ import store from './store'
 import { VueSpinners } from '@saeris/vue-spinners'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
+import Vuelidate from 'vuelidate'
+
 
 Vue.config.productionTip = false
 
@@ -17,3 +19,4 @@ new Vue({
 
 Vue.use(VueSpinners)
 Vue.use(Vuetify)
+Vue.use(Vuelidate)

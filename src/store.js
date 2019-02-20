@@ -74,6 +74,11 @@ export default new Vuex.Store({
           return item
         }
       })
+    },
+    submitOrderForm(state, payload) {
+      state.order.customerName = payload.customerName,
+        state.order.customerEmail = payload.customerEmail,
+        state.order.customerPhone = payload.customerPhone
     }
 
   },
@@ -115,6 +120,26 @@ export default new Vuex.Store({
     },
     incrementQuantity({ commit }, id) {
       commit('incrementQuantity', id)
+    },
+    submitOrderForm({ commit }, orderInfo) {
+      commit('submitOrderForm', orderInfo)
+    },
+    submitOrder({ commit }) {
+      console.log(this.state)
+      axios.post('http://127.0.0.1:8000/orders', {
+        customer_name: this.state.order.customerName,
+        customer_email: this.state.order.customerEmail,
+        items: this.state.order.items.map(item => {
+          return {
+            menu_id: item.menu_id,
+            quantity: item.quantity
+          }
+        })
+      })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => console.log(err))
     }
   },
   //these can be thought of as computed properties, like a filtered from of a list
