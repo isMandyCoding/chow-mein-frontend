@@ -29,7 +29,50 @@
               </v-expand-transition>
             </v-img>
             <v-card-text> {{ (menuItem.priceInCents / 100).toLocaleString("en-US", {style:"currency", currency:"USD"}) }} </v-card-text>
-            
+            <v-card-actions>
+                <v-dialog
+      v-model="dialog"
+      width="500"
+    >
+      <v-btn
+        slot="activator"
+        color="red lighten-2"
+        dark
+      >
+        Add To Cart
+      </v-btn>
+
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          Select Quantity
+        </v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          Quantity: {{quantity}} <v-btn @click="quantity > 0 ? quantity-- : null" > - </v-btn> <v-btn @click="quantity++" > + </v-btn>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            flat
+            @click="dialog = false"
+          >
+            Cancel
+          </v-btn>
+          <v-btn
+            color="primary"
+            flat
+            @click="addToCart(menuItem)"
+          >
+            Add to Cart
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+            </v-card-actions>
             </v-card>
 
         </v-hover>
@@ -42,6 +85,12 @@
 export default {
   name: "MenuItem",
   props: ["categoryId"],
+  data() {
+    return {
+      dialog: false,
+      quantity: 0
+    };
+  },
   computed: {
     menuItems() {
       return this.$store.state.menu.menu_items.filter(
@@ -53,7 +102,16 @@ export default {
     }
   },
   methods: {
-    addToCart() {}
+    addToCart(menu_item) {
+      this.dialog = false;
+      let newItem = {
+        ...menu_item,
+        quantity: this.quantity,
+        id: this.$store.state.order.itemId
+      };
+      this.$store.dispatch("addToCart", newItem);
+      this.quantity = 0;
+    }
   }
 };
 </script>

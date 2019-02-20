@@ -20,7 +20,8 @@ export default new Vuex.Store({
       customerPhone: "",
       forTime: "",
       fromGuest: undefined,
-      items: []
+      items: [],
+      itemId: 0
     },
     orderItems: []
 
@@ -42,6 +43,37 @@ export default new Vuex.Store({
     },
     menuLang(state, payload) {
       state.menuLang = payload
+    },
+    addToCart(state, payload) {
+      state.order.items.push(payload)
+      state.order.itemId++
+    },
+    removeFromCart(state, payload) {
+      state.order.items = state.order.items.filter(item => item.id !== payload.id)
+    },
+    decrementQuantity(state, payload) {
+      state.order.items = state.order.items.map(item => {
+        if (item.id === payload) {
+          return {
+            ...item,
+            quantity: item.quantity - 1
+          }
+        } else {
+          return item
+        }
+      })
+    },
+    incrementQuantity(state, payload) {
+      state.order.items = state.order.items.map(item => {
+        if (item.id === payload) {
+          return {
+            ...item,
+            quantity: item.quantity + 1
+          }
+        } else {
+          return item
+        }
+      })
     }
 
   },
@@ -71,6 +103,18 @@ export default new Vuex.Store({
     },
     changeMenuLang({ commit }, language) {
       commit('menuLang', language)
+    },
+    addToCart({ commit }, item) {
+      commit('addToCart', item)
+    },
+    removeFromCart({ commit }, item) {
+      commit('removeFromCart', item)
+    },
+    decrementQuantity({ commit }, id) {
+      commit('decrementQuantity', id)
+    },
+    incrementQuantity({ commit }, id) {
+      commit('incrementQuantity', id)
     }
   },
   //these can be thought of as computed properties, like a filtered from of a list

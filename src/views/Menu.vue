@@ -15,6 +15,7 @@
       <v-flex column xs3 sm3 md3> <!-- Right Column-->
           <v-card flat>
             <v-card-title class="display-3" >Cart</v-card-title>
+            <Cart />
         </v-card>
       </v-flex>
     </v-layout>
@@ -28,13 +29,15 @@
 import PopularItems from "@/components/PopularItems.vue";
 import MenuLanguage from "@/components/MenuLanguage.vue";
 import MenuSections from "@/components/MenuSections.vue";
+import Cart from "@/components/Cart.vue"
 
 export default {
   name: "Menu",
   components: {
     PopularItems,
     MenuLanguage,
-    MenuSections
+    MenuSections,
+    Cart
   },
   created() {
     this.$store.dispatch("getMenu");
