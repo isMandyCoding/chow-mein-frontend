@@ -1,6 +1,5 @@
 <template>
 <v-app>
-  <!-- <v-navigation-drawer app></v-navigation-drawer> -->
     <v-toolbar>
     <v-toolbar-side-icon></v-toolbar-side-icon>
     <v-toolbar-title>Asian Cafe Express</v-toolbar-title>

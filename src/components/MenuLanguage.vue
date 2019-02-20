@@ -1,10 +1,8 @@
 <template>
     <div>
-        <v-btn @click="changeToEnglish" color="red darken-3" class="white-text" >English</v-btn>
+        <v-btn @click="changeToEnglish" >English</v-btn>
         <v-btn @click="changeToChinese" >中文</v-btn>
-        <v-btn @click="changeToBoth" >English & 中文 </v-btn>
-
-        
+        <v-btn @click="changeToBoth" >English & 中文 </v-btn>        
     </div>
 </template>
 

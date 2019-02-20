@@ -67,10 +67,9 @@ export default new Vuex.Store({
         .then(response => {
           commit('orderItems', response.data)
         })
-        .catch(err => console.log(err))
+        .catch(err => commit('menuError', err.response.status))
     },
     changeMenuLang({ commit }, language) {
-      console.log("this is the language passed into this action: ", language)
       commit('menuLang', language)
     }
   },
