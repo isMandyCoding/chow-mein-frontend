@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import moment from 'moment'
 
 Vue.use(Vuex)
 
@@ -21,9 +22,13 @@ export default new Vuex.Store({
       forTime: "",
       fromGuest: undefined,
       items: [],
-      itemId: 0
+      itemId: 0,
+      newOrderId: undefined,
+      orderMessage: ""
+
     },
-    orderItems: []
+    orderItems: [],
+    adminOrders: []
 
   },
   //synchronous functions that take state and a payload as arguments
@@ -79,6 +84,13 @@ export default new Vuex.Store({
       state.order.customerName = payload.customerName,
         state.order.customerEmail = payload.customerEmail,
         state.order.customerPhone = payload.customerPhone
+    },
+    submitOrder(state, payload) {
+      state.order.newOrderId = payload.orderId,
+        state.order.orderMessage = payload.message
+    },
+    gotOrders(state, orders) {
+      state.adminOrders = orders
     }
 
   },
@@ -105,6 +117,14 @@ export default new Vuex.Store({
           commit('orderItems', response.data)
         })
         .catch(err => commit('menuError', err.response.status))
+    },
+    getOrders({ commit }) {
+      axios.get('http://127.0.0.1:8000/orders')
+        .then(orders => {
+          commit("gotOrders", orders.data)
+        })
+        .catch(err => console.log(err))
+
     },
     changeMenuLang({ commit }, language) {
       commit('menuLang', language)
@@ -138,6 +158,7 @@ export default new Vuex.Store({
       })
         .then(response => {
           console.log(response)
+          commit("submitOrder", response.data)
         })
         .catch(err => console.log(err))
     }
@@ -161,6 +182,54 @@ export default new Vuex.Store({
         return acc
       }, [])
       return mostPopularItems.sort((a, b) => b.orderFrequency - a.orderFrequency).slice(0, 6)
+    },
+    receivedOrders(state) {
+      let pendingOrders = Object.keys(state.adminOrders)
+        .filter(order => state.adminOrders[order].status === "received")
+        .map(pendingOrder => {
+          return {
+            ...state.adminOrders[pendingOrder],
+            created_at: moment(state.adminOrders[pendingOrder].created_at).format('MMMM Do YYYY, h:mm:ss a')
+          }
+        })
+        .sort((a, b) => a.created_at - b.created_at)
+      return pendingOrders
+    },
+    readyForPickup(state) {
+      let ready = Object.keys(state.adminOrders)
+        .filter(order => state.adminOrders[order].status === "ready")
+        .map(readyOrder => {
+          return {
+            ...state.adminOrders[readyOrder],
+            created_at: moment(state.adminOrders[readyOrder].created_at).format('MMMM Do YYYY, h:mm:ss a')
+          }
+        })
+        .sort((a, b) => a.created_at - b.created_at)
+      return ready
+    },
+    cooking(state) {
+      let cookingOrders = Object.keys(state.adminOrders)
+        .filter(order => state.adminOrders[order].status === "cooking")
+        .map(cookingOrder => {
+          return {
+            ...state.adminOrders[cookingOrder],
+            created_at: moment(state.adminOrders[cookingOrder].created_at).format('MMMM Do YYYY, h:mm:ss a')
+          }
+        })
+        .sort((a, b) => a.created_at - b.created_at)
+      return cookingOrders
+    },
+    completeOrders(state) {
+      let completed = Object.keys(state.adminOrders)
+        .filter(order => state.adminOrders[order].status === "completed")
+        .map(completedOrder => {
+          return {
+            ...state.adminOrders[completedOrder],
+            created_at: moment(state.adminOrders[completedOrder].created_at).format('MMMM Do YYYY, h:mm:ss a')
+          }
+        })
+        .sort((a, b) => a.created_at - b.created_at)
+      return completed
     }
   }
 })

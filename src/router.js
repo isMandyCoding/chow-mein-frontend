@@ -34,6 +34,11 @@ export default new Router({
       path: '/checkout',
       name: "Checkout",
       component: () => import('./views/Checkout.vue')
+    },
+    {
+      path: '/admin',
+      name: "Admin",
+      component: () => import('./views/Admin.vue')
     }
   ]
 })

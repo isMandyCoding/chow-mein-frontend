@@ -1,14 +1,14 @@
 <template>
 <v-app>
-    <v-toolbar>
-    <v-toolbar-side-icon></v-toolbar-side-icon>
+    <v-toolbar class="blue-grey white--text" >
+    <v-toolbar-side-icon class="white--text"></v-toolbar-side-icon>
     <v-toolbar-title>Asian Cafe Express</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat to="/" >Home</v-btn>      
-      <v-btn flat to="/about">About</v-btn>
-      <v-btn flat to="/contact">Location & Hours</v-btn>
-      <v-btn flat to="/menu">Menu</v-btn>
+      <v-btn class="white--text" flat to="/" >Home</v-btn>      
+      <v-btn class="white--text" flat to="/about">About</v-btn>
+      <v-btn class="white--text" flat to="/contact">Location & Hours</v-btn>
+      <v-btn class="white--text" flat to="/menu">Menu</v-btn>
     </v-toolbar-items>
   </v-toolbar>
   <v-content>

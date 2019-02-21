@@ -6,6 +6,7 @@
         <v-card flat>
           <v-card-title class="display-3" >Menu</v-card-title>
           <MenuLanguage />
+          <SearchBar />
           <PopularItems /> <!-- rows -->
           <MenuSections /> <!-- rows -->
 
@@ -29,7 +30,8 @@
 import PopularItems from "@/components/PopularItems.vue";
 import MenuLanguage from "@/components/MenuLanguage.vue";
 import MenuSections from "@/components/MenuSections.vue";
-import Cart from "@/components/Cart.vue"
+import Cart from "@/components/Cart.vue";
+import SearchBar from "@/components/SearchBar.vue";
 
 export default {
   name: "Menu",
@@ -37,7 +39,8 @@ export default {
     PopularItems,
     MenuLanguage,
     MenuSections,
-    Cart
+    Cart,
+    SearchBar
   },
   created() {
     this.$store.dispatch("getMenu");
