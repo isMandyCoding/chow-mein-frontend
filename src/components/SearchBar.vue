@@ -13,6 +13,7 @@
         prepend-icon="search"
         single-line
         placeholder="search menu"
+        @input="changeSearch"
       ></v-text-field>
     </v-toolbar>
   </v-card>
@@ -28,9 +29,14 @@ export default {
   },
   methods: {
     changeSearch() {
-      this.$store.dispatch("searchMenu");
-      this.searchString = value;
+      this.$store.dispatch("searchMenu", this.searchString);
     }
   }
+  // computed: {
+  //   filteredMenu() {
+  //     console.log(this.$store.getters.searchedMenu);
+  //     return this.$store.getters.searchedMenu;
+  //   }
+  // }
 };
 </script>

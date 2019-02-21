@@ -93,7 +93,7 @@ export default {
   },
   computed: {
     menuItems() {
-      return this.$store.state.menu.menu_items.filter(
+      return this.$store.getters.searchedMenu.filter(
         item => item.category_id === this.categoryId
       );
     },

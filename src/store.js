@@ -14,6 +14,7 @@ export default new Vuex.Store({
     menuError: null,
     loadingMenu: false,
     menuLang: "english",
+    searchString: "",
 
     order: {
       customerName: "",
@@ -25,8 +26,8 @@ export default new Vuex.Store({
       itemId: 0,
       newOrderId: undefined,
       orderMessage: ""
-
     },
+
     orderItems: [],
     adminOrders: []
 
@@ -91,6 +92,10 @@ export default new Vuex.Store({
     },
     gotOrders(state, orders) {
       state.adminOrders = orders
+    },
+    changeSearchString(state, filterString) {
+      console.log(filterString)
+      state.searchString = filterString
     }
 
   },
@@ -101,12 +106,10 @@ export default new Vuex.Store({
       commit('loadingMenu')
       axios.get('http://127.0.0.1:8000/menu')
         .then(response => {
-          console.log(response)
           commit('getMenu', response.data)
 
         })
         .catch(err => {
-          console.log(err)
           commit('menuError', err.response.status)
         })
     },
@@ -145,10 +148,10 @@ export default new Vuex.Store({
       commit('submitOrderForm', orderInfo)
     },
     submitOrder({ commit }) {
-      console.log(this.state)
       axios.post('http://127.0.0.1:8000/orders', {
         customer_name: this.state.order.customerName,
         customer_email: this.state.order.customerEmail,
+        customerPhoneNumber: this.state.order.customerPhone,
         items: this.state.order.items.map(item => {
           return {
             menu_id: item.menu_id,
@@ -157,10 +160,12 @@ export default new Vuex.Store({
         })
       })
         .then(response => {
-          console.log(response)
           commit("submitOrder", response.data)
         })
         .catch(err => console.log(err))
+    },
+    searchMenu({ commit }, searchString) {
+      commit('changeSearchString', searchString)
     }
   },
   //these can be thought of as computed properties, like a filtered from of a list
@@ -182,6 +187,10 @@ export default new Vuex.Store({
         return acc
       }, [])
       return mostPopularItems.sort((a, b) => b.orderFrequency - a.orderFrequency).slice(0, 6)
+    },
+    searchedMenu(state) {
+      let filteredMenu = state.menu.menu_items ? state.menu.menu_items.filter(item => item.eng_name.toLowerCase().includes(state.searchString.toLowerCase()) || item.ch_name.includes(state.searchString)) : []
+      return filteredMenu
     },
     receivedOrders(state) {
       let pendingOrders = Object.keys(state.adminOrders)
