@@ -5,9 +5,9 @@
       <v-flex column xs9 sm9 md9> <!-- Left Column-->
         <v-card flat>
           <v-card-title class="display-3" >Menu</v-card-title>
-          <MenuLanguage />
-          <SearchBar />
           <PopularItems /> <!-- rows -->
+          <SearchBar />
+          <MenuLanguage />
           <MenuSections /> <!-- rows -->
 
         </v-card>

@@ -86,8 +86,7 @@ export default {
   },
   methods: {
     submitOrder() {
-      this.$store.dispatch("submitOrder");
-      //   this.$store.dispatch("checkOrderStatus", this.order.newOrderId);
+      this.$socket.emit("submitOrder", this.order);
       this.$emit("continuar");
     }
   }

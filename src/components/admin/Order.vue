@@ -22,6 +22,7 @@
         ></v-select>
       </v-flex>
       <v-btn @click="changeStatus" > Change Order Status </v-btn>
+      <v-btn @click="cancelOrder" > Cancel Order </v-btn>
         <v-list-tile> Subtotal: {{ subTotal.toLocaleString("en-US", {style:"currency", currency:"USD"}) }} </v-list-tile>
         <v-list-tile>Estimated Tax: {{ (subTotal * 0.086).toLocaleString("en-US", {style:"currency", currency:"USD"})  }}</v-list-tile>
         <v-list-tile>Total: {{ (subTotal + (subTotal * 0.086) ).toLocaleString("en-US", {style:"currency", currency:"USD"})  }} </v-list-tile>
@@ -78,8 +79,15 @@ export default {
       };
       this.$socket.emit("changeOrderStatus", orderData);
       this.$store.dispatch("changeOrderStatus", orderData);
+    },
+    cancelOrder() {
+      this.$store.dispatch("cancelOrder", this.order);
     }
   },
-  sockets: {}
+  sockets: {
+    ordersChanged: function(data) {
+      console.log(data);
+    }
+  }
 };
 </script>

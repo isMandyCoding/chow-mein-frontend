@@ -70,7 +70,8 @@ export default {
   data() {
     return {
       e1: 0,
-      orderSubmitted: false
+      orderSubmitted: false,
+      newOrderId: undefined
     };
   },
   methods: {
@@ -81,6 +82,11 @@ export default {
   computed: {
     order() {
       return this.$store.state.order;
+    }
+  },
+  sockets: {
+    updateOrderStatus(newOrderData) {
+      this.newOrderId = newOrderData.order_id;
     }
   }
 };
