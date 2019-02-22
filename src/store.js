@@ -29,7 +29,6 @@ export default new Vuex.Store({
       orderMessage: "",
       newOrderStatus: ""
     },
-
     orderItems: [],
     adminOrders: []
 
@@ -115,6 +114,10 @@ export default new Vuex.Store({
     updateStatus(state, newStatus) {
       state.newOrderStatus = newStatus
     },
+    changeOrderStatus(state, orderData) {
+      console.log(orderData)
+      state.adminOrders[orderData.orderData].status = orderData.status
+    }
     // startInterVal(state) {
     //   state.startInterVal = true
     // },
@@ -203,6 +206,17 @@ export default new Vuex.Store({
         })
         .catch(err => console.log(err))
 
+    },
+    changeOrderStatus({ commit }, orderUpdate) {
+      console.log(orderUpdate)
+      axios.patch(`http://127.0.0.1:8000/orders/status/${orderUpdate.orderId}`, {
+        status_id: orderUpdate.statusCode
+      })
+        .then(result => {
+          console.log()
+          commit("changeOrderStatus", result.data)
+        })
+        .catch(error => console.log(error))
     }
   },
   //these can be thought of as computed properties, like a filtered from of a list

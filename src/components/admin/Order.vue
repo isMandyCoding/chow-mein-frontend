@@ -8,13 +8,23 @@
         </v-card-title>
         <v-list v-if="toggleItems">
             <div v-for="item in order.items" :key="item.menu_id">
-                <OrderItem :item="item" />
+                <OrderItem :item="item" :orderId="order.order_id" />
             </div>                                              
         </v-list>
         <v-spacer></v-spacer>
+        <v-flex xs12 sm6 d-flex>
+        <v-select
+          v-model="value"
+          @change="changeStatusCode(value)"
+          :items="statususes"
+          label="Order Status"
+          
+        ></v-select>
+      </v-flex>
+      <v-btn @click="changeStatus" > Change Order Status </v-btn>
         <v-list-tile> Subtotal: {{ subTotal.toLocaleString("en-US", {style:"currency", currency:"USD"}) }} </v-list-tile>
         <v-list-tile>Estimated Tax: {{ (subTotal * 0.086).toLocaleString("en-US", {style:"currency", currency:"USD"})  }}</v-list-tile>
-        <v-list-tile> Total: {{ (subTotal + (subTotal * 0.086) ).toLocaleString("en-US", {style:"currency", currency:"USD"})  }} </v-list-tile>
+        <v-list-tile>Total: {{ (subTotal + (subTotal * 0.086) ).toLocaleString("en-US", {style:"currency", currency:"USD"})  }} </v-list-tile>
     </v-card>
 </template>
 
@@ -28,7 +38,26 @@ export default {
   },
   data() {
     return {
-      toggleItems: false
+      toggleItems: false,
+      statususes: [
+        {
+          text: "Received",
+          value: 1
+        },
+        {
+          text: "Cooking",
+          value: 2
+        },
+        {
+          text: "Ready",
+          value: 3
+        },
+        {
+          text: "Complete",
+          value: 4
+        }
+      ],
+      currentStatus: 1
     };
   },
   computed: {
@@ -36,6 +65,17 @@ export default {
       return this.order.items.reduce((acc, item) => {
         return acc + (item.priceInCents * item.quantity) / 100;
       }, 0);
+    }
+  },
+  methods: {
+    changeStatusCode(value) {
+      this.currentStatus = value;
+    },
+    changeStatus() {
+      this.$store.dispatch("changeOrderStatus", {
+        orderId: this.order.order_id,
+        statusCode: this.currentStatus
+      });
     }
   }
 };

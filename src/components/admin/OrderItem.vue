@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  props: ["item"],
+  props: ["item", "orderId"],
   name: "OrderItem"
 };
 </script>
