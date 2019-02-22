@@ -64,14 +64,22 @@ export default {
   props: ["newOrderId"],
   data() {
     return {
-      e1: 0
+      e1: 0,
+      orderStatus: "received"
     };
   },
   sockets: {
-    orderStatusUpdate: function(updatedStatus) {
-      console.log(
-        `this method was fired by the socket server. eg: io.emit("customEmit", data)`
-      );
+    updateOrderStatus: function(orderData) {
+      let deCoder = {
+        1: "received",
+        2: "cooking",
+        3: "ready",
+        4: "complete"
+      };
+      this.orderStatus = deCoder[orderData.statusCode];
+      this.e1 = orderData.statusCode;
+      console.log("event emmitted from server", orderData, this.orderStatus);
+      // return (this.orderStatus = orderData.status);
     }
   }
 };

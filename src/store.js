@@ -115,8 +115,7 @@ export default new Vuex.Store({
       state.newOrderStatus = newStatus
     },
     changeOrderStatus(state, orderData) {
-      console.log(orderData)
-      state.adminOrders[orderData.orderData].status = orderData.status
+      state.adminOrders[orderData.orderId].status = orderData.status
     }
     // startInterVal(state) {
     //   state.startInterVal = true

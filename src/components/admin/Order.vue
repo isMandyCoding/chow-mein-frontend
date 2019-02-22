@@ -15,7 +15,7 @@
         <v-flex xs12 sm6 d-flex>
         <v-select
           v-model="value"
-          @change="changeStatusCode(value)"
+          @change="changeStatusCode"
           :items="statususes"
           label="Order Status"
           
@@ -72,11 +72,14 @@ export default {
       this.currentStatus = value;
     },
     changeStatus() {
-      this.$store.dispatch("changeOrderStatus", {
+      let orderData = {
         orderId: this.order.order_id,
         statusCode: this.currentStatus
-      });
+      };
+      this.$socket.emit("changeOrderStatus", orderData);
+      this.$store.dispatch("changeOrderStatus", orderData);
     }
-  }
+  },
+  sockets: {}
 };
 </script>
