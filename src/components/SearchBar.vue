@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="pa-3"
+    class="pa-3 grey lighten-2"
     flat
   >
     <v-toolbar

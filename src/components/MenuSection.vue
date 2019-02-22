@@ -1,6 +1,6 @@
 <template>
-    <v-flex row>
-        <v-btn>
+    <v-flex>
+        <v-btn class="blue-grey white--text" >
             <h2 @click="toggleSection = !toggleSection" > {{section.eng_section}} <v-icon v-if="!toggleSection" >arrow_drop_down</v-icon> <v-icon v-if="toggleSection" >arrow_drop_up</v-icon> </h2>
         </v-btn>
         <Categories v-if="toggleSection" v-bind:sectionId="section.section_id" />

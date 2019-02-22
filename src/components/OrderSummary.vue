@@ -10,7 +10,7 @@
         <v-container>
             <v-layout>
                 <v-flex>
-                    <v-card>
+                    <v-card flat>
                         <v-card-title>
                             <h3>Customer Information</h3>
                         </v-card-title>

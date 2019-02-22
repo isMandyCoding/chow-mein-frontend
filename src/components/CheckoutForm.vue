@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-         <v-card>
+         <v-card flat>
         <v-card-title
           class="headline grey lighten-2"
           primary-title

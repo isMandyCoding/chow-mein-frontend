@@ -186,21 +186,12 @@ export default new Vuex.Store({
     searchMenu({ commit }, searchString) {
       commit('changeSearchString', searchString)
     },
-    // getStatus({ commit }, newOrderId) {
-
-    //   axios.get(`http://127.0.0.1:8000/orders/${newOrderId}`)
-    //     .then(result => {
-    //       let newStatus = result.data[newOrderId].status
-    //       commit("updateStatus", newStatus)
-    //     })
-    //     .catch(err => console.log(err))
-
-    // },
-    changeOrderStatus({ commit }, orderUpdate) {
+    changeOrderStatus({ commit, dispatch }, orderUpdate) {
       axios.patch(`http://127.0.0.1:8000/orders/status/${orderUpdate.orderId}`, {
         status_id: orderUpdate.statusCode
       })
         .then(result => {
+          dispatch('getOrders')
           commit("changeOrderStatus", result.data)
         })
         .catch(error => console.log(error))

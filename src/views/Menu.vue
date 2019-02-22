@@ -4,10 +4,34 @@
     <v-layout> 
       <v-flex column xs9 sm9 md9> <!-- Left Column-->
         <v-card flat>
-          <v-card-title class="display-3" >Menu</v-card-title>
+          <v-card-title class="headline grey lighten-2"
+          primary-title >Menu</v-card-title>
           <PopularItems /> <!-- rows -->
-          <SearchBar />
-          <MenuLanguage />
+          <v-container fluid class="grey lighten-2">
+            <v-layout>
+              <v-flex column xs6 sm6 md6>
+                <SearchBar />
+              </v-flex>
+
+              <v-flex column xs6 sm6 md6>
+                <MenuLanguage />  
+              </v-flex>
+            </v-layout>
+          </v-container>
+
+          <!-- <v-container>
+            <v-layout>
+              <v-flex>
+                <template>
+                  <v-container :key="item.menu_id" v-if="searchString.length && searchedItems.length" v-for="item in searchedItems" >
+                    <MenuItem  :menuItem="item" />
+                  </v-container>
+                </template>
+
+              </v-flex>
+            </v-layout>
+          </v-container> -->
+          
           <MenuSections /> <!-- rows -->
 
         </v-card>
@@ -15,7 +39,8 @@
       
       <v-flex column xs3 sm3 md3> <!-- Right Column-->
           <v-card class="sticky-cart" flat>
-            <v-card-title class="display-3" >Cart</v-card-title>
+            <v-card-title class="headline grey lighten-2"
+          primary-title >Cart</v-card-title>
             <Cart />
         </v-card>
       </v-flex>
@@ -30,6 +55,7 @@ import MenuLanguage from "@/components/MenuLanguage.vue";
 import MenuSections from "@/components/MenuSections.vue";
 import Cart from "@/components/Cart.vue";
 import SearchBar from "@/components/SearchBar.vue";
+import MenuItem from "@/components/MenuItem.vue";
 
 export default {
   name: "Menu",
@@ -38,11 +64,18 @@ export default {
     MenuLanguage,
     MenuSections,
     Cart,
-    SearchBar
+    SearchBar,
+    MenuItem
   },
   computed: {
     menuLang() {
       return this.$store.state.menuLang;
+    },
+    searchString() {
+      return this.$store.state.searchString;
+    },
+    searchedItems() {
+      return this.$store.getters.searchedMenu;
     }
   }
 };

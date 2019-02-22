@@ -1,6 +1,5 @@
 <template>
-  <div class="about">
-    <h1>This is the super secret admin view wooooooOOOoo!</h1>
+  <div class="admin">
     <Orders />
   </div>
 </template>

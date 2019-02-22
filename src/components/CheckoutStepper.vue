@@ -18,18 +18,18 @@
         
         <CheckoutForm v-on:continuar="stepUp" />
 
-        <v-btn flat>Cancel</v-btn>
+        <v-btn>Cancel</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="2">
 
         <OrderSummary v-on:continuar="stepUp" />
 
-        <v-btn flat>Cancel</v-btn>
+        <v-btn>Cancel</v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
-        <v-card>
+        <v-card flat>
             <v-card-title
             class="headline grey lighten-2"
             primary-title
@@ -40,15 +40,6 @@
               <OrderTracker :newOrderId="order.newOrderId" />
             </v-card-content>
         </v-card>
-
-        <v-btn
-          color="primary"
-          @click="e1 = 1"
-        >
-          Continue
-        </v-btn>
-
-        <v-btn flat>Cancel</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -77,6 +68,9 @@ export default {
   methods: {
     stepUp() {
       this.e1++;
+    },
+    returnToMenu() {
+      this.$router.push("/menu");
     }
   },
   computed: {

@@ -20,15 +20,17 @@
               <v-expand-transition>
                 <div
                   v-if="hover"
-                  class="d-flex transition-fast-in-fast-out orange darken-2 v-card--reveal white--text"
+                  class="d-flex transition-fast-in-fast-out blue-grey darken-4 v-card--reveal white--text"
                   style="height: 100%;"
                 >
-              <p class="white--text" v-if="menuLang === 'english' || menuLang === 'both' " >{{menuItem.eng_name}}</p>
-              <p class="white--text" v-if="menuLang === 'chinese' || menuLang === 'both' " >{{menuItem.ch_name}}</p>
+              <p>{{ (menuItem.priceInCents / 100).toLocaleString("en-US", {style:"currency", currency:"USD"}) }}</p>
                 </div>
               </v-expand-transition>
             </v-img>
             <v-card-text> {{ (menuItem.priceInCents / 100).toLocaleString("en-US", {style:"currency", currency:"USD"}) }} </v-card-text>
+            <v-card-text v-if="menuLang === 'english' || menuLang === 'both' " >{{menuItem.eng_name}}</v-card-text>
+            <v-card-text v-if="menuLang === 'chinese' || menuLang === 'both' " >{{menuItem.ch_name}}</v-card-text>
+            
             <v-card-actions>
                 <v-dialog
       v-model="dialog"
@@ -36,7 +38,7 @@
     >
       <v-btn
         slot="activator"
-        color="red lighten-2"
+        class="blue-grey white--text"
         dark
       >
         Add To Cart
@@ -56,14 +58,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            color="primary"
+            class="blue-grey white--text"
             flat
             @click="dialog = false"
           >
             Cancel
           </v-btn>
           <v-btn
-            color="primary"
+            class="blue-grey white--text"
             flat
             @click="addToCart(menuItem)"
           >

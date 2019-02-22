@@ -9,9 +9,9 @@
                             <div>
                               <v-tabs
                                 v-model="active"
-                                color="cyan"
+                                color="blue-grey darken-2"
                                 dark
-                                slider-color="yellow"
+                                slider-color="white"
                               >
                                 <v-tab
                                   v-for="type in orderTypes"
@@ -32,10 +32,11 @@
                                 >
 
                                  <v-card>
-                                  <v-card-title primary-title>
+                                  <v-card-title primary-title class="headline grey lighten-2">
                                   <div>
-                                      <h3 class="headline mb-0">{{type }} Orders</h3>
+                                      <h3 class="mb-0">{{type }} Orders</h3>
                                   </div>
+                                  </v-card-title>
                                   <template>   
                                       <v-container fluid>
                                           <v-layout column wrap>
@@ -56,7 +57,7 @@
                                       </v-container>
                                   </template>
 
-                                  </v-card-title>
+                                  
                               </v-card>
                                   
                                 </v-tab-item>
