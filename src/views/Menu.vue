@@ -14,15 +14,13 @@
       </v-flex>
       
       <v-flex column xs3 sm3 md3> <!-- Right Column-->
-          <v-card flat>
+          <v-card class="sticky-cart" flat>
             <v-card-title class="display-3" >Cart</v-card-title>
             <Cart />
         </v-card>
       </v-flex>
     </v-layout>
-
-
-
+    
   </v-container>
 </template>
 
@@ -42,10 +40,6 @@ export default {
     Cart,
     SearchBar
   },
-  created() {
-    this.$store.dispatch("getMenu");
-    this.$store.dispatch("getOrderItems");
-  },
   computed: {
     menuLang() {
       return this.$store.state.menuLang;
@@ -53,3 +47,14 @@ export default {
   }
 };
 </script>
+
+<style lang="css">
+.sticky-cart {
+  min-height: 300px;
+  max-height: auto;
+  position: -webkit-sticky;
+  position: sticky;
+  position: fixed;
+  top: 115px;
+}
+</style>

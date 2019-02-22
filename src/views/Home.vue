@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout>
       <v-flex>
-        <PopularItems v-if="!menuError && !loadingMenu"  />
+        <HelloWorld v-if="!menuError && !loadingMenu"  />
         <v-progress-circular v-if="loadingMenu" />
         <Error v-if="menuError" />
       </v-flex>

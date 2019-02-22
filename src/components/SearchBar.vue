@@ -32,11 +32,5 @@ export default {
       this.$store.dispatch("searchMenu", this.searchString);
     }
   }
-  // computed: {
-  //   filteredMenu() {
-  //     console.log(this.$store.getters.searchedMenu);
-  //     return this.$store.getters.searchedMenu;
-  //   }
-  // }
 };
 </script>

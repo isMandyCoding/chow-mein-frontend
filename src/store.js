@@ -15,6 +15,7 @@ export default new Vuex.Store({
     loadingMenu: false,
     menuLang: "english",
     searchString: "",
+    startInterVal: false,
 
     order: {
       customerName: "",
@@ -25,7 +26,8 @@ export default new Vuex.Store({
       items: [],
       itemId: 0,
       newOrderId: undefined,
-      orderMessage: ""
+      orderMessage: "",
+      newOrderStatus: ""
     },
 
     orderItems: [],
@@ -87,8 +89,21 @@ export default new Vuex.Store({
         state.order.customerPhone = payload.customerPhone
     },
     submitOrder(state, payload) {
-      state.order.newOrderId = payload.orderId,
-        state.order.orderMessage = payload.message
+      state.order = {
+        customerName: "",
+        customerEmail: "",
+        customerPhone: "",
+        forTime: "",
+        fromGuest: undefined,
+        items: [],
+        itemId: 0,
+        newOrderId: undefined,
+        orderMessage: ""
+      },
+        state.order.newOrderId = payload.orderId,
+        state.order.orderMessage = payload.message,
+        state.order.newOrderStatus = "received"
+
     },
     gotOrders(state, orders) {
       state.adminOrders = orders
@@ -96,7 +111,16 @@ export default new Vuex.Store({
     changeSearchString(state, filterString) {
       console.log(filterString)
       state.searchString = filterString
-    }
+    },
+    updateStatus(state, newStatus) {
+      state.newOrderStatus = newStatus
+    },
+    // startInterVal(state) {
+    //   state.startInterVal = true
+    // },
+    // stopInterVal(state) {
+    //   state.startInterVal = false
+    // }
 
   },
   //asynchronous logic can be performed with an action, then the mutation can be committed 
@@ -147,7 +171,7 @@ export default new Vuex.Store({
     submitOrderForm({ commit }, orderInfo) {
       commit('submitOrderForm', orderInfo)
     },
-    submitOrder({ commit }) {
+    submitOrder({ commit, dispatch }) {
       axios.post('http://127.0.0.1:8000/orders', {
         customer_name: this.state.order.customerName,
         customer_email: this.state.order.customerEmail,
@@ -162,10 +186,23 @@ export default new Vuex.Store({
         .then(response => {
           commit("submitOrder", response.data)
         })
+        .then(() => {
+          dispatch("checkOrderStatus", this.state.order.newOrderId)
+        })
         .catch(err => console.log(err))
     },
     searchMenu({ commit }, searchString) {
       commit('changeSearchString', searchString)
+    },
+    getStatus({ commit }, newOrderId) {
+
+      axios.get(`http://127.0.0.1:8000/orders/${newOrderId}`)
+        .then(result => {
+          let newStatus = result.data[newOrderId].status
+          commit("updateStatus", newStatus)
+        })
+        .catch(err => console.log(err))
+
     }
   },
   //these can be thought of as computed properties, like a filtered from of a list

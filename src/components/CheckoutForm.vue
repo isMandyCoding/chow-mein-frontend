@@ -1,18 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog
-      v-model="dialog"
-      width="500"
-    >
-      <v-btn
-        slot="activator"
-        color="red lighten-2"
-        dark
-      >
-        Checkout
-      </v-btn>
-
-      <v-card>
+         <v-card>
         <v-card-title
           class="headline grey lighten-2"
           primary-title
@@ -50,8 +38,15 @@
                 @blur="$v.customerPhone.$touch()"
                 ></v-text-field>
                 <!-- <v-btn @click="dialog = false">Back to Menu</v-btn> -->
-                <v-btn @click="submit">Continue to Checkout</v-btn>
-                <v-btn @click="clear">Clear</v-btn>
+                <v-btn
+                  color="primary"
+                  @click="submit"
+                >Continue
+                </v-btn>
+                <v-btn
+                color="primary" 
+                @click="clear"
+                >Clear</v-btn>
             </form>
             </template>
             <!-- form -->
@@ -61,7 +56,6 @@
         </v-container>
         
       </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -72,7 +66,6 @@ import { required, maxLength, email } from "vuelidate/lib/validators";
 export default {
   name: "CheckoutForm",
   mixins: [validationMixin],
-
   validations: {
     name: { required, maxLength: maxLength(255) },
     email: { required, email },
@@ -80,7 +73,6 @@ export default {
   },
 
   data: () => ({
-    // dialog: false,
     name: "",
     email: "",
     customerPhone: ""
@@ -119,10 +111,8 @@ export default {
         customerEmail: this.email,
         customerPhone: this.customerPhone
       };
-      console.log(orderInfo);
+      this.$emit("continuar");
       this.$store.dispatch("submitOrderForm", orderInfo);
-      console.log(this.$store.state.order);
-      this.$router.push("/checkout");
     },
     clear() {
       this.$v.$reset();

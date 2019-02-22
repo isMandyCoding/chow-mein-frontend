@@ -21,6 +21,19 @@
   
 </template>
 
+<script>
+export default {
+  created() {
+    this.$store.dispatch("getMenu");
+    this.$store.dispatch("getOrderItems");
+  },
+  sockets: {
+    connect: function() {
+      console.log("socket connected");
+    }
+  }
+};
+</script>
 
 
 

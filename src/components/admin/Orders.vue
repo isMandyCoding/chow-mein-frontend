@@ -14,17 +14,7 @@
                                 <v-container fluid>
                                     <v-layout column wrap>
                                     <v-flex v-for="order in pendingOrders" :key="order.order_id" xs4>
-                                        <v-card>
-                                            <v-card-title>
-                                                {{order.customer_name}} | {{order.created_at}}
-                                            </v-card-title>
-                                            <v-card-subtitle>
-                                                {{ order.order_id }}
-                                            </v-card-subtitle>
-                                            <v-card-content>
-                                                <Cart v-bind:adminView="true" :adminOrder="order" />
-                                            </v-card-content>
-                                        </v-card>
+                                        <Order :order="order" />
                                     </v-flex>                                        
                                     </v-layout>
                                 </v-container>
@@ -42,12 +32,16 @@
 </template>
 
 <script>
-import Cart from "@/components/Cart.vue";
-
+import Order from "@/components/admin/Order.vue";
 export default {
   name: "Orders",
   components: {
-    Cart
+    Order
+  },
+  data() {
+    return {
+      toggleItems: false
+    };
   },
   created() {
     this.$store.dispatch("getOrders");
